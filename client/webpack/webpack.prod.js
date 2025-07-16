@@ -5,8 +5,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackMerge = require('webpack-merge');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // <-- Add this line!
 
 const common = require('./webpack.common');
 
@@ -33,7 +33,9 @@ const config = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [require('cssnano'), require('autoprefixer')]
+               postcssOptions: {
+                 plugins: () => [require('cssnano'), require('autoprefixer')]
+              }
             }
           },
           {
@@ -75,43 +77,44 @@ const config = {
     maxAssetSize: 512000
   },
   optimization: {
-    minimize: true,
-    nodeEnv: 'production',
-    sideEffects: true,
-    concatenateModules: true,
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
+  minimize: true,
+  nodeEnv: 'production',
+  sideEffects: true,
+  concatenateModules: true,
+  runtimeChunk: 'single',
+  splitChunks: {
+    cacheGroups: {
+      vendors: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        chunks: 'all'
+      },
+      styles: {
+        test: /\.css$/,
+        name: 'styles',
+        chunks: 'all',
+        enforce: true
+      }
+    }
+  },
+  minimizer: [
+    new TerserPlugin({
+      terserOptions: {
+        warnings: false,
+        compress: {
+          comparisons: false
         },
-        styles: {
-          test: /\.css$/,
-          name: 'styles',
-          chunks: 'all',
-          enforce: true
+        parse: {},
+        mangle: true,
+        output: {
+          comments: false,
+          ascii_only: true
         }
       }
-    },
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          warnings: false,
-          compress: {
-            comparisons: false
-          },
-          parse: {},
-          mangle: true,
-          output: {
-            comments: false,
-            ascii_only: true
-          }
-        }
-      })
-    ]
-  },
+    }),
+    new CssMinimizerPlugin()
+  ]
+},
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -143,7 +146,7 @@ const config = {
       short_name: 'MERNStore',
       description: 'MERN Store!',
       background_color: '#fff',
-      theme_color: '#4a68aa',
+      theme_color: '#1a68aa',
       inject: true,
       ios: true,
       icons: [
@@ -160,14 +163,6 @@ const config = {
         }
       ]
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }]
-      },
-      canPrint: true
-    })
   ]
 };
 

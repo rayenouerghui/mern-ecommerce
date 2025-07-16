@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   client:
     build: client
@@ -8,29 +7,32 @@ services:
       - '8080:8080'
     networks:
       - app-network
-
+    depends_on:
+      - server
   server:
     build: server
     container_name: server
     environment:
       - PORT=3000
       - BASE_API_URL=api
-      - CLIENT_URL=http://localhost:8080
-      - JWT_SECRET=update_your_JWT_secret
-      - MONGO_URI=mongodb://mongo:27017/mern_ecommerce # Default Mongo URL & DB name when running project locally
+      - CLIENT_URL=http://client:8080
+      - JWT_SECRET=your-secure-jwt-secret-12345
+      - MONGO_URI=mongodb://mongodb:27017/mern_ecommerce
+      - MAILGUN_API_KEY=dummy-key
+      - MAILGUN_DOMAIN=dummy-domain
     ports:
       - '3000:3000'
-    command: [
-        'sh',
-        '-c',
-        'npm run seed:db admin@example.com admin123 && npm start'
-      ] # Default email and password arguments to database seed script - update your admin email and password
+    volumes:
+      - /home/ubuntu/mern-ecommerce/server/dist:/usr/src/app/dist
+    command:
+      - sh
+      - -c
+      - npm run seed:db admin@example.com admin123 && npm start
     depends_on:
-      - mongo
+      - mongodb
     networks:
       - app-network
-
-  mongo:
+  mongodb:
     image: mongo:latest
     container_name: mongodb
     command: mongod --quiet --logpath /dev/null
@@ -38,7 +40,6 @@ services:
       - '27017:27017'
     networks:
       - app-network
-
 networks:
   app-network:
     driver: bridge

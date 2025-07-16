@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackMerge = require('webpack-merge');
-const Dotenv = require('dotenv-webpack');
 
 const common = require('./webpack.common');
 
@@ -61,7 +60,6 @@ const config = {
     ]
   },
   plugins: [
-    new Dotenv(),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'public/index.html'),
       inject: true
