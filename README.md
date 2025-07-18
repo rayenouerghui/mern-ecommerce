@@ -118,11 +118,18 @@ A demonstration of a key feature or page within the application, such as the das
 
 ![App Feature Example](screenshots/cap4.png)
 
-## Next Steps / Future Work
-- Add custom domain and ELB for production
-- Set up CI/CD (GitHub Actions)
-- Add monitoring/logging (CloudWatch)
-- Prepare for auto-scaling
+## Kubernetes Deployment Proof
+### 1. Running Pods
+![Pods Screenshot](screenshots/capk1.png)
+
+### 2. Services
+![Services Screenshot](screenshots/capk2.png)
+
+### 3. App URL
+![Minikube URL Screenshot](screenshots/capk3.png)
+
+### 5. Server Logs (Optional)
+![Server Logs Screenshot](screenshots/capk4.png)
 
 ## License
 MIT
