@@ -91,7 +91,32 @@ server {
   ```
 
 ## Screenshots
-_Add screenshots of your app, deployment steps, and AWS console here._
+
+Below are key steps and results from deploying and running the MERN E-commerce project on AWS EC2 with Docker Compose.
+
+### 1. Docker Compose Up
+
+This screenshot shows the successful startup of all services (`mongodb`, `server`, and `client`) using Docker Compose.
+
+![Docker Compose Up](screenshots/cap1.png)
+
+### 2. Running Containers
+
+A snapshot of the running Docker containers, confirming that all services are up and mapped to their respective ports.
+
+![Docker ps Output](screenshots/cap2.png)
+
+### 3. Application Home Page
+
+The application is accessible from the browser via the EC2 public IP and mapped port, confirming a successful deployment.
+
+![App Home Page](screenshots/cap3.png)
+
+### 4. Application Features Example
+
+A demonstration of a key feature or page within the application, such as the dashboard, product listing, or admin panel.
+
+![App Feature Example](screenshots/cap4.png)
 
 ## Next Steps / Future Work
 - Add custom domain and ELB for production
