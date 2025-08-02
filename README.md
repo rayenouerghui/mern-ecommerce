@@ -1,8 +1,9 @@
-# MERN E-commerce Project (Optimized)
+# MERN E-commerce Project 
 
 ## Overview
-A scalable, secure e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js).  
-**Deployed on AWS EC2 with Docker, Nginx, and HTTPS.**
+This MERN e-commerce app allows buyers to browse and purchase products while giving sellers and admins full control over the store.  
+It is a scalable, secure platform built with MongoDB, Express.js, React, and Node.js,  
+and is deployed on AWS EC2 using Docker, Nginx, and HTTPS.
 
 ## Features
 - Buyer: Browse categories, products, brands
